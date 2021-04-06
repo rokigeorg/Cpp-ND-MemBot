@@ -82,24 +82,24 @@ ChatBot& ChatBot::operator=(const ChatBot &source) // 3 : copy assignment operat
 
     ChatBot::ChatBot(ChatBot &&source) // 4 : move constructor
     {
-        std::cout << "MOVING (c’tor) instance " << &source << " to instance " << this << std::endl;
+        std::cout << "Chatbot Move Constructor - MOVING (c’tor) instance " << &source << " to instance " << this << std::endl;
        
         _image = source._image;
         _chatLogic = source._chatLogic;
         _rootNode = source._rootNode;
         _currentNode = source._currentNode;
 
+        _chatLogic->SetChatbotHandle(this);
+
         source._chatLogic = nullptr;
         source._rootNode = nullptr;
         source._currentNode = nullptr;
-        // deallocate heap memory
-        delete source._image;
         source._image = NULL;
     }
 
     ChatBot& ChatBot::operator=(ChatBot &&source) // 5 : move assignment operator
     {
-        std::cout << "MOVING (assign) instance " << &source << " to instance " << this << std::endl;
+        std::cout << "ChatBot move assignment operator - MOVING (assign) instance " << &source << " to instance " << this << std::endl;
         if(this == &source)
         {
             return *this;
@@ -110,17 +110,17 @@ ChatBot& ChatBot::operator=(const ChatBot &source) // 3 : copy assignment operat
             delete _image;
             _image = NULL;
         }
-        
+                
         _image = source._image;
         _chatLogic = source._chatLogic;
         _currentNode = source._currentNode;
         _rootNode = source._rootNode;
 
+        _chatLogic->SetChatbotHandle(this);
+
         source._chatLogic = nullptr;
         source._rootNode = nullptr;
         source._currentNode = nullptr;
-        // deallocate heap memory
-        delete source._image;
         source._image = NULL;
 
         return *this;
